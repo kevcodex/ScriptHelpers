@@ -15,9 +15,10 @@ public enum OutputStyle {
 }
 
 public class Console {
+    private static let textColorReset = "\u{001B}[;m"
+
     public static func writeMessage(_ message: String, styled: OutputStyle = .black) {
-        let textColorReset = "\u{001B}[;m"
-        
+
         switch styled {
         case .black:
             print("\u{001B}[;m\(message)")
@@ -40,6 +41,11 @@ public class Console {
         }
     }
     
+    public static func writeMessage(_ error: Error) {
+        print("\u{001B}[0;31m\(error)", textColorReset)
+    }
+
+    
     public static func writeSpacer() {
         Console.writeMessage("=================================== \n")
     }
@@ -54,4 +60,10 @@ public class Console {
         
         return strData.trimmingCharacters(in: CharacterSet.newlines)
     }
+    
+    public static func getInput(from question: String, styled: OutputStyle = .black) -> String {
+        Console.writeMessage(question, styled: styled)
+        return Console.getInput()
+    }
+
 }
