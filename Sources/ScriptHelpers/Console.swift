@@ -1,13 +1,12 @@
 //
 //  Console.swift
-//  hello-scriptPackageDescription
 //
 //  Created by Kirby on 11/19/17.
 //
 
 import Foundation
 
-enum OutputStyle {
+public enum OutputStyle {
     case black
     case purple
     case blue
@@ -15,8 +14,8 @@ enum OutputStyle {
     case red
 }
 
-class Console {
-    static func writeMessage(_ message: String, styled: OutputStyle = .black) {
+public class Console {
+    public static func writeMessage(_ message: String, styled: OutputStyle = .black) {
         let textColorReset = "\u{001B}[;m"
         
         switch styled {
@@ -41,11 +40,11 @@ class Console {
         }
     }
     
-    static func writeSpacer() {
+    public static func writeSpacer() {
         Console.writeMessage("=================================== \n")
     }
     
-    static func getInput() -> String {
+    public static func getInput() -> String {
         let keyboard = FileHandle.standardInput
         let inputData = keyboard.availableData
         
