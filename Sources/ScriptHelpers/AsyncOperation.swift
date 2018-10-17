@@ -9,25 +9,22 @@ import Foundation
 
 open class AsyncOperation: Operation {
     public enum State: String {
-        case ready = "isReady"
+        case waiting = "isWaiting"
         case executing = "isExecuting"
         case finished = "isFinished"
     }
     
-    public private(set) var state: State = .ready {
+    public private(set) var state: State = .waiting {
         willSet {
             if newValue != state {
-                willChangeValue(forKey: State.ready.rawValue)
                 willChangeValue(forKey: State.executing.rawValue)
                 willChangeValue(forKey: State.finished.rawValue)
             }
         }
-        
         didSet {
             if oldValue != state {
-                didChangeValue(forKey: State.ready.rawValue)
-                didChangeValue(forKey: State.finished.rawValue)
                 didChangeValue(forKey: State.executing.rawValue)
+                didChangeValue(forKey: State.finished.rawValue)
             }
         }
     }
@@ -36,20 +33,12 @@ open class AsyncOperation: Operation {
         return true
     }
     
-    open override var isReady: Bool {
-        return state == .ready
-    }
-    
     open override var isExecuting: Bool {
         return state == .executing
     }
     
     open override var isFinished: Bool {
         return state == .finished
-    }
-    
-    open override func cancel() {
-        state = .finished
     }
     
     open override func start() {
