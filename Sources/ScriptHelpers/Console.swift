@@ -61,9 +61,32 @@ public class Console {
         return strData.trimmingCharacters(in: CharacterSet.newlines)
     }
     
-    public static func getInput(from question: String, styled: OutputStyle = .black) -> String {
+    public static func getInput(for question: String, styled: OutputStyle = .black) -> String {
         Console.writeMessage(question, styled: styled)
         return Console.getInput()
     }
 
+    /**
+     Keep asking same question until a valid or exit string is inputted
+     - Parameters:
+        - question: The question to keep repeating to the user
+        - invalidText: Text to display to user if they enter an invalid input
+        - validInputs: Array of strings that are valid and will finish the loop
+        - exitInputs: Array of strings that will cause the app to exit
+     */
+    public static func waitForValidInput(question: String, invalidText: String, validInputs: [String], exitInputs: [String]) {
+        var isValidInput = false
+        
+        while !isValidInput {
+            let input = getInput(for: question, styled: .blue)
+            
+            if validInputs.contains(input) {
+                isValidInput = true
+            } else if exitInputs.contains(input) {
+                exit(0)
+            } else {
+                Console.writeMessage(invalidText, styled: .red)
+            }
+        }
+    }
 }
