@@ -8,10 +8,11 @@ import Foundation
 
 public enum OutputStyle {
     case black
-    case purple
-    case blue
-    case green
     case red
+    case green
+    case yellow
+    case blue
+    case purple
 }
 
 public class Console {
@@ -23,21 +24,22 @@ public class Console {
         case .black:
             print("\u{001B}[;m\(message)")
             
-        case .purple:
-            print("\u{001B}[0;35m\(message)", textColorReset)
-            
-        case .blue:
-            print("\u{001B}[0;34m\(message)", textColorReset)
+        case .red:
+            print("\u{001B}[0;31m\(message)", textColorReset)
+            // Below outputs to the STDERR
+        //      fputs("\u{001B}[0;31m\(message)\n", stderr)
             
         case .green:
             print("\u{001B}[0;32m\(message)", textColorReset)
             
-        case .red:
+        case .yellow:
+            print("\u{001B}[0;33m\(message)", textColorReset)
             
-            print("\u{001B}[0;31m\(message)", textColorReset)
-            // Below outputs to the STDERR
-            // Kinda like nslog
-            //      fputs("\u{001B}[0;31m\(message)\n", stderr)
+        case .blue:
+            print("\u{001B}[0;34m\(message)", textColorReset)
+            
+        case .purple:
+            print("\u{001B}[0;35m\(message)", textColorReset)
         }
     }
     
