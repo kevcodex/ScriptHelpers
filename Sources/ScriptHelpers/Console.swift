@@ -16,7 +16,7 @@ public enum OutputStyle {
 }
 
 public class Console {
-    private static let textColorReset = "\u{001B}[;m"
+    public static let textColorReset = "\u{001B}[;m"
 
     public static func writeMessage(_ message: String, styled: OutputStyle = .black) {
 
@@ -41,10 +41,12 @@ public class Console {
         case .purple:
             print("\u{001B}[0;35m\(message)", textColorReset)
         }
+        
+        fflush(stdout)
     }
     
     public static func writeMessage(_ error: Error) {
-        print("\u{001B}[0;31m\(error)", textColorReset)
+        writeMessage(error.localizedDescription, styled: .red)
     }
 
     
